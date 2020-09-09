@@ -3,12 +3,14 @@ services:
     broker:
         build: ./broker
         working_dir: /broker
+        container_name: broker
         ports:
         - 8883:8883
         volumes:
         - ./broker:/broker
         - ./sub:/sub
         - ./pub:/pub
+        - ./certs:/certs
         command: /broker/run.sh
     sub:
         links:
@@ -19,6 +21,7 @@ services:
         - SUB_PORT=8883
         volumes:
         - ./sub:/sub
+        - ./certs:/certs
         command: /sub/run.sh
     pub:
         links:
@@ -29,4 +32,5 @@ services:
         - PUB_PORT=8883
         volumes:
         - ./pub:/pub
+        - ./certs:/certs
         command: /pub/run.sh

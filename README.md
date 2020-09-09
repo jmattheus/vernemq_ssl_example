@@ -3,7 +3,7 @@ This example is currently working!
 
 ## Download and Build
 Build with Docker Compose
-`git clone git@github.com:nickfloop/vernemq_ssl_example.git && cd vernemq_ssl_example && docker-compose build`
+`git clone git@github.com:jmattheus/vernemq_ssl_example.git && cd vernemq_ssl_example && ./casetup.sh && docker-compose build`
 
 ## Start the broker
 In one terminal, start the VerneMQ broker

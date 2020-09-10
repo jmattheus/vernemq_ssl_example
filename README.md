@@ -30,12 +30,12 @@ By default, this example configures the pub and sub clients to connect on port 8
 
 # Explanation of the Certs and Config
 ## Certificate Authority
-A Certificate Authority (CA) in its simplest form is a certificate that is used to sign other certificates. A system can trust a CA and in doing so implicitly trusts certificates signed by the CA. As it's used in this example, a CA consists of a public portion, `ca.crt`, and a private key, `ca.key`. The public portion needs to be trusted by a system that intends to use certificates issued by the CA.  The private key is only needed to sign/issue child certificates.
+A Certificate Authority (CA) in its simplest form is a certificate that is used to sign other certificates. A system can trust a CA and in doing so implicitly trusts certificates signed by the CA. As it's used in this example, a CA consists of a public portion, `ca.crt`, and a private key, `ca.key`. The public portion needs to be trusted by a system that intends to use certificates issued by the CA. The private key is only needed to sign/issue child certificates.
 
 In this example, `casetup.sh` creates multiple Certificate Authorities in an effort to make it clear which systems need to trust which certs.  
 
 ## Broker Certificate
-The broker certificate is used to set up a basic SSL connection to the broker. In this example, we create a CA called `serverca.crt`. We then create a certificate and key for the broker named `server.crt` which is signed by `serverca.crt` and has a corresponding private key `server.key`.
+The broker certificate is used to set up a basic SSL connection to the broker. In this example, we create a CA called `serverca.crt`. We then create a certificate and key for the broker named `server.crt` which is signed by `serverca.crt`/`serverca.key` and has a corresponding private key `server.key`.
 
 The certificate and the key are specified in the `vernemq.conf` file:
 ```
@@ -43,7 +43,7 @@ listener.ssl.default.certfile = /certs/server.crt
 listener.ssl.default.keyfile = /certs/server.key
 ```
 
-A client connecting to the broker must trust the broker CA for the SSL connection to work. In this example, we enable that trust by adding `--cafile /certs/serverca.crt` to the mosquitto client calls.  The trust could also be achieved by installing the ca cert as a trusted authority onto the machine running the client.
+A client connecting to the broker must trust the broker CA for the SSL connection to work. In this example, we enable that trust by adding `--cafile /certs/serverca.crt` to the mosquitto client calls.  The trust could also be achieved by installing the CA cert as a trusted authority onto the machine running the client.
 
 ## Client Certificate
 The client certificate is used to authenticate the client to the broker and must be issued by a CA the broker trusts. In this example, we have multiple client certs and corresponding keys issued by multiple CAs. 

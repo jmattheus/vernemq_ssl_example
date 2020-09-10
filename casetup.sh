@@ -25,12 +25,13 @@ create_client() {
     echo 'pass' | openssl pkcs12 -export -out certs/$1.pfx -inkey certs/$1.key -in certs/$1.crt -passout stdin
 }
 mkdir -p certs
+rm certs/*
 create_client server serverca pass
 create_client client1 clientca1 pass
 create_client client2 clientca2 pass
-create_client linqpad1 linqpadca pass
-create_client linqpad2 linqpadca pass
+create_client client3 sharedca pass
+create_client client4 sharedca pass
 
 cp certs/clientca1.crt certs/allclientca.crt
 cat certs/clientca2.crt >> certs/allclientca.crt
-cat certs/linqpadca.crt >> certs/allclientca.crt
+cat certs/sharedca.crt >> certs/allclientca.crt

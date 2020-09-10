@@ -1,8 +1,7 @@
 #!/bin/bash
 
 create_client() {
-    if [ ! -f $2.key ]; then
-        echo "Creating ca $2"
+    if [ ! -f certs/$2.key ]; then
         openssl req \
             -new \
             -newkey rsa:2048 \
@@ -24,6 +23,7 @@ create_client() {
     openssl x509 -req -in certs/$1.csr -CA certs/$2.crt -CAkey certs/$2.key -CAcreateserial -out certs/$1.crt -days 360
     echo 'pass' | openssl pkcs12 -export -out certs/$1.pfx -inkey certs/$1.key -in certs/$1.crt -passout stdin
 }
+
 mkdir -p certs
 rm certs/*
 create_client server serverca pass
